@@ -23,6 +23,8 @@ export default function TimeEntries() {
     (state) => state.updateTimeEntryProjectId
   );
 
+  const deleteTimeEntry = useStore((state) => state.deleteTimeEntry);
+
   const updateTimeEntryTagId = useStore((state) => state.updateTimeEntryTagId);
 
   useEffect(() => {
@@ -54,29 +56,40 @@ export default function TimeEntries() {
 
       {timeEntriesStatus === fetchStatus.succeeded &&
         timeEntriesList.map((timeEntry) => (
-          <div key={timeEntry.id} className="flex p-2 border">
-            <DebouncedDescription
-              timeEntryDescription={timeEntry.description}
-              updateDescription={(newDescription) =>
-                updateTimeEntryDescription(timeEntry.id, newDescription)
-              }
-            />
-            <ListSelect
-              timeEntry={timeEntry}
-              updateProperty="projectId"
-              listOptions={projectList}
-              updateTimeEntryFunction={(newProjectId) =>
-                updateTimeEntryProjectId(timeEntry.id, newProjectId)
-              }
-            />
-            <ListSelect
-              timeEntry={timeEntry}
-              updateProperty="tagId"
-              listOptions={tagList}
-              updateTimeEntryFunction={(newTagId) =>
-                updateTimeEntryTagId(timeEntry.id, newTagId)
-              }
-            />
+          <div key={timeEntry.id} className="border flex justify-between p-2">
+            <div className="flex">
+              <DebouncedDescription
+                timeEntryDescription={timeEntry.description}
+                updateDescription={(newDescription) =>
+                  updateTimeEntryDescription(timeEntry.id, newDescription)
+                }
+              />
+              <ListSelect
+                timeEntry={timeEntry}
+                updateProperty="projectId"
+                listOptions={projectList}
+                updateTimeEntryFunction={(newProjectId) =>
+                  updateTimeEntryProjectId(timeEntry.id, newProjectId)
+                }
+              />
+              <ListSelect
+                timeEntry={timeEntry}
+                updateProperty="tagId"
+                listOptions={tagList}
+                updateTimeEntryFunction={(newTagId) =>
+                  updateTimeEntryTagId(timeEntry.id, newTagId)
+                }
+              />
+            </div>
+            <button
+              onClick={() => {
+                deleteTimeEntry(timeEntry.id);
+              }}
+              className="border px-2"
+              type="button"
+            >
+              Delete entry
+            </button>
           </div>
         ))}
 

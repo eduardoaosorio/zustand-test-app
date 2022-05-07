@@ -52,6 +52,16 @@ const timeEntriesSlice = (set, get) => ({
         timeEntry.projectId = projectId;
       })
     ),
+  deleteTimeEntry: (id) =>
+    set(
+      produce((state) => {
+        const deleteIndex = state.timeEntries.list.findIndex(
+          (timeEntry) => timeEntry.id === id
+        );
+
+        state.timeEntries.list.splice(deleteIndex, 1);
+      })
+    ),
 });
 
 export default timeEntriesSlice;
