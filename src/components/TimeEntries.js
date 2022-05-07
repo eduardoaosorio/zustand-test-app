@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import useStore from '../store/useStore';
-import { mockApi } from '../mockApi/mockApi';
 import { fetchStatus } from '../utils/constants';
 import DebouncedDescription from './DebouncedDescription';
 import ListSelect from './ListSelect';
@@ -8,9 +7,7 @@ import { projectList } from '../utils/constants';
 import { tagList } from '../utils/constants';
 
 export default function TimeEntries() {
-  const setTimeEntriesList = useStore((state) => state.setTimeEntriesList);
-  const setTimeEntriesStatus = useStore((state) => state.setTimeEntriesStatus);
-  const setTimeEntriesError = useStore((state) => state.setTimeEntriesError);
+  const fetchTimeEntries = useStore((state) => state.fetchTimeEntries);
   const timeEntriesList = useStore((state) => state.timeEntries.list);
   const timeEntriesStatus = useStore((state) => state.timeEntries.status);
   const timeEntriesError = useStore((state) => state.timeEntries.error);
@@ -29,26 +26,9 @@ export default function TimeEntries() {
 
   useEffect(() => {
     if (timeEntriesStatus === fetchStatus.idle) {
-      setTimeEntriesStatus(fetchStatus.loading);
-      mockApi
-        .getTimeEntries()
-        .then((timeEntries) => {
-          setTimeEntriesStatus(fetchStatus.succeeded);
-          setTimeEntriesList(timeEntries);
-          setTimeEntriesError(null);
-        })
-        .catch((err) => {
-          console.log(err);
-          setTimeEntriesStatus(fetchStatus.failed);
-          setTimeEntriesError(err);
-        });
+      fetchTimeEntries();
     }
-  }, [
-    setTimeEntriesError,
-    setTimeEntriesList,
-    setTimeEntriesStatus,
-    timeEntriesStatus,
-  ]);
+  }, [fetchTimeEntries, timeEntriesStatus]);
 
   return (
     <section className="p-3">

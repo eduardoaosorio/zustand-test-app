@@ -1,5 +1,6 @@
 import produce from 'immer';
 import { fetchStatus } from '../utils/constants';
+import { mockApi } from '../mockApi/mockApi';
 
 const timeEntriesSlice = (set, get) => ({
   timeEntries: {
@@ -25,6 +26,18 @@ const timeEntriesSlice = (set, get) => ({
         state.timeEntries.error = value;
       })
     ),
+  fetchTimeEntries: async () => {
+    try {
+      get().setTimeEntriesStatus(fetchStatus.loading);
+      const timeEntries = await mockApi.getTimeEntries();
+      get().setTimeEntriesStatus(fetchStatus.succeeded);
+      get().setTimeEntriesList(timeEntries);
+      get().setTimeEntriesError(null);
+    } catch (err) {
+      get().setTimeEntriesStatus(fetchStatus.failed);
+      get().setTimeEntriesError(err);
+    }
+  },
   updateTimeEntryDescription: (id, description) =>
     set(
       produce((state) => {
