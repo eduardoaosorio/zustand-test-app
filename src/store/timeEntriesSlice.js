@@ -12,19 +12,25 @@ const timeEntriesSlice = (set, get) => ({
     set(
       produce((state) => {
         state.timeEntries.list = timeEntries;
-      })
+      }),
+      false,
+      'setTimeEntriesList'
     ),
   setTimeEntriesStatus: (status) =>
     set(
       produce((state) => {
         state.timeEntries.status = status;
-      })
+      }),
+      false,
+      'setTimeEntriesStatus'
     ),
   setTimeEntriesError: (value) =>
     set(
       produce((state) => {
         state.timeEntries.error = value;
-      })
+      }),
+      false,
+      'setTimeEntriesError'
     ),
   fetchTimeEntries: async () => {
     try {
@@ -45,7 +51,9 @@ const timeEntriesSlice = (set, get) => ({
           (timeEntry) => timeEntry.id === id
         );
         timeEntry.description = description;
-      })
+      }),
+      false,
+      'updateTimeEntryDescription'
     ),
   updateTimeEntryTagId: (id, tagId) =>
     set(
@@ -54,7 +62,9 @@ const timeEntriesSlice = (set, get) => ({
           (timeEntry) => timeEntry.id === id
         );
         timeEntry.tagId = tagId;
-      })
+      }),
+      false,
+      'updateTimeEntryTagId'
     ),
   updateTimeEntryProjectId: (id, projectId) =>
     set(
@@ -63,7 +73,9 @@ const timeEntriesSlice = (set, get) => ({
           (timeEntry) => timeEntry.id === id
         );
         timeEntry.projectId = projectId;
-      })
+      }),
+      false,
+      'updateTimeEntryProjectId'
     ),
   deleteTimeEntry: (id) =>
     set(
@@ -73,7 +85,9 @@ const timeEntriesSlice = (set, get) => ({
         );
 
         state.timeEntries.list.splice(deleteIndex, 1);
-      })
+      }),
+      false,
+      'deleteTimeEntry'
     ),
 });
 
