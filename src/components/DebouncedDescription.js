@@ -12,13 +12,15 @@ export default React.memo(function DebouncedDescription({
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      updateDescription(textInput);
+      if (textInput !== timeEntryDescription) {
+        updateDescription(textInput);
+      }
     }, 500);
 
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [textInput, updateDescription]);
+  }, [textInput, timeEntryDescription, updateDescription]);
 
   useEffect(() => {
     setTextInput(timeEntryDescription);
