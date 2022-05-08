@@ -1,4 +1,5 @@
 import React from 'react';
+import shallow from 'zustand/shallow';
 import DebouncedDescription from './DebouncedDescription';
 import useStore from '../store/useStore';
 import { projectList } from '../utils/constants';
@@ -6,18 +7,24 @@ import { tagList } from '../utils/constants';
 import ListSelect from './ListSelect';
 
 export default function TimerControl() {
-  const newTimeEntry = useStore((state) => state.newTimeEntry);
-  const updateNewTimeEntryDescription = useStore(
-    (state) => state.updateNewTimeEntryDescription
+  const [
+    newTimeEntry,
+    updateNewTimeEntryDescription,
+    updateNewTimeEntryTagId,
+    updateNewTimeEntryProjectId,
+    saveNewTimeEntry,
+    resetNewTimeEntry,
+  ] = useStore(
+    (state) => [
+      state.newTimeEntry,
+      state.updateNewTimeEntryDescription,
+      state.updateNewTimeEntryTagId,
+      state.updateNewTimeEntryProjectId,
+      state.saveNewTimeEntry,
+      state.resetNewTimeEntry,
+    ],
+    shallow
   );
-  const updateNewTimeEntryTagId = useStore(
-    (state) => state.updateNewTimeEntryTagId
-  );
-  const updateNewTimeEntryProjectId = useStore(
-    (state) => state.updateNewTimeEntryProjectId
-  );
-  const saveNewTimeEntry = useStore((state) => state.saveNewTimeEntry);
-  const resetNewTimeEntry = useStore((state) => state.resetNewTimeEntry);
 
   const handleAddTimeEntry = () => {
     saveNewTimeEntry();

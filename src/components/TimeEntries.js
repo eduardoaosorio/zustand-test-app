@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import shallow from 'zustand/shallow';
 import useStore from '../store/useStore';
 import { fetchStatus } from '../utils/constants';
 import DebouncedDescription from './DebouncedDescription';
@@ -7,22 +8,28 @@ import { projectList } from '../utils/constants';
 import { tagList } from '../utils/constants';
 
 export default function TimeEntries() {
-  const fetchTimeEntries = useStore((state) => state.fetchTimeEntries);
-  const timeEntriesList = useStore((state) => state.timeEntries.list);
-  const timeEntriesStatus = useStore((state) => state.timeEntries.status);
-  const timeEntriesError = useStore((state) => state.timeEntries.error);
-
-  const updateTimeEntryDescription = useStore(
-    (state) => state.updateTimeEntryDescription
+  const [
+    fetchTimeEntries,
+    timeEntriesList,
+    timeEntriesStatus,
+    timeEntriesError,
+    updateTimeEntryDescription,
+    updateTimeEntryProjectId,
+    deleteTimeEntry,
+    updateTimeEntryTagId,
+  ] = useStore(
+    (state) => [
+      state.fetchTimeEntries,
+      state.timeEntries.list,
+      state.timeEntries.status,
+      state.timeEntries.error,
+      state.updateTimeEntryDescription,
+      state.updateTimeEntryProjectId,
+      state.deleteTimeEntry,
+      state.updateTimeEntryTagId,
+    ],
+    shallow
   );
-
-  const updateTimeEntryProjectId = useStore(
-    (state) => state.updateTimeEntryProjectId
-  );
-
-  const deleteTimeEntry = useStore((state) => state.deleteTimeEntry);
-
-  const updateTimeEntryTagId = useStore((state) => state.updateTimeEntryTagId);
 
   useEffect(() => {
     if (timeEntriesStatus === fetchStatus.idle) {
