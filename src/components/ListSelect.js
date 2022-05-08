@@ -1,17 +1,16 @@
 import React from 'react';
 
-export default function ListSelect({
-  timeEntry,
+export default React.memo(function ListSelect({
+  initialValue,
   listOptions,
   updateTimeEntryFunction,
-  updateProperty,
 }) {
   const handleSelect = (e) => updateTimeEntryFunction(parseInt(e.target.value));
 
   return (
     <select
       className="border"
-      value={String(timeEntry[updateProperty]) || undefined}
+      value={String(initialValue) || undefined}
       onChange={handleSelect}
     >
       {listOptions.map((option) => (
@@ -21,4 +20,4 @@ export default function ListSelect({
       ))}
     </select>
   );
-}
+});

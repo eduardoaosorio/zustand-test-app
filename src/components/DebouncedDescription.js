@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function DebouncedDescription({
+export default React.memo(function DebouncedDescription({
   timeEntryDescription,
   updateDescription,
 }) {
@@ -32,4 +32,4 @@ export default function DebouncedDescription({
       onChange={handleChange}
     />
   );
-}
+});

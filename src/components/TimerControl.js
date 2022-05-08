@@ -8,7 +8,9 @@ import ListSelect from './ListSelect';
 
 export default function TimerControl() {
   const [
-    newTimeEntry,
+    newTimeEntryDescription,
+    newTimeEntryProjectId,
+    newTimeEntryTagId,
     updateNewTimeEntryDescription,
     updateNewTimeEntryTagId,
     updateNewTimeEntryProjectId,
@@ -16,7 +18,9 @@ export default function TimerControl() {
     resetNewTimeEntry,
   ] = useStore(
     (state) => [
-      state.newTimeEntry,
+      state.newTimeEntry.description,
+      state.newTimeEntry.projectId,
+      state.newTimeEntry.tagId,
       state.updateNewTimeEntryDescription,
       state.updateNewTimeEntryTagId,
       state.updateNewTimeEntryProjectId,
@@ -36,18 +40,16 @@ export default function TimerControl() {
       <div className="border flex justify-between p-2">
         <div className="flex">
           <DebouncedDescription
-            timeEntryDescription={newTimeEntry.description}
+            timeEntryDescription={newTimeEntryDescription}
             updateDescription={updateNewTimeEntryDescription}
           />
           <ListSelect
-            timeEntry={newTimeEntry}
-            updateProperty="projectId"
+            initialValue={newTimeEntryProjectId}
             listOptions={projectList}
             updateTimeEntryFunction={updateNewTimeEntryProjectId}
           />
           <ListSelect
-            timeEntry={newTimeEntry}
-            updateProperty="tagId"
+            initialValue={newTimeEntryTagId}
             listOptions={tagList}
             updateTimeEntryFunction={updateNewTimeEntryTagId}
           />

@@ -52,16 +52,14 @@ export default function TimeEntries() {
                 }
               />
               <ListSelect
-                timeEntry={timeEntry}
-                updateProperty="projectId"
+                initialValue={timeEntry.projectId}
                 listOptions={projectList}
                 updateTimeEntryFunction={(newProjectId) =>
                   updateTimeEntryProjectId(timeEntry.id, newProjectId)
                 }
               />
               <ListSelect
-                timeEntry={timeEntry}
-                updateProperty="tagId"
+                initialValue={timeEntry.tagId}
                 listOptions={tagList}
                 updateTimeEntryFunction={(newTagId) =>
                   updateTimeEntryTagId(timeEntry.id, newTagId)
