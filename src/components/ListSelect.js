@@ -11,7 +11,7 @@ export default function ListSelect({
   return (
     <select
       className="border"
-      value={timeEntry[updateProperty] || undefined}
+      value={String(timeEntry[updateProperty]) || undefined}
       onChange={handleSelect}
     >
       {listOptions.map((option) => (
